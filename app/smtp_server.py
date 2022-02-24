@@ -4,7 +4,7 @@ import asyncore
 import threading
 
 class CustomSMTPServer(smtpd.SMTPServer):
-  def process_message(self, peer, mailfrom, rcpttos, data):
+  def process_message(self, peer, mailfrom, rcpttos, data, **kwargs):
     print('Receiving message from:', peer)
     print('Message addressed from:', mailfrom)
     print('Message addressed to:', rcpttos)
@@ -13,7 +13,7 @@ class CustomSMTPServer(smtpd.SMTPServer):
 
 class SMTPServer():
   def __init__(self):
-    self.port = 1025
+    self.port = 1030
 
   def start(self):
     '''Start listening on self.port'''
@@ -39,5 +39,7 @@ class SMTPServer():
     return self.smtp.emails
 
 if __name__ == '__main__':
-  server = CustomSMTPServer(('0.0.0.0', 1025), None)
-  asyncore.loop()
+  # server = CustomSMTPServer(('0.0.0.0', 1030), None)
+  # asyncore.loop()
+  server = SMTPServer()
+  server.start()

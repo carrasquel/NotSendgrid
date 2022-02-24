@@ -1,16 +1,18 @@
 import smtplib
-import email.utils
-from email.mime.text import MIMEText
 
-# Create the message
-msg = MIMEText('This is the body of the message.')
-msg['To'] = email.utils.formataddr(('Recipient', 'recipient@example.com'))
-msg['From'] = email.utils.formataddr(('Author', 'author@example.com'))
-msg['Subject'] = 'Simple test message'
+sender = 'from@0.0.0.0:1030'
+receivers = ['to@0.0.0.0:1025']
 
-server = smtplib.SMTP('127.0.0.1', 1025)
-server.set_debuglevel(True) # show communication with the server
+message = """From: From Person <from@fromdomain.com>
+To: To Person <to@todomain.com>
+Subject: SMTP e-mail test
+
+This is a test e-mail message.
+"""
+
 try:
-    server.sendmail('author@example.com', ['recipient@example.com'], msg.as_string())
-finally:
-    server.quit()
+   smtpObj = smtplib.SMTP('localhost:1025')
+   smtpObj.sendmail(sender, receivers, message)         
+   print("Successfully sent email")
+except smtplib.SMTPException:
+   print ("Error: unable to send email")
