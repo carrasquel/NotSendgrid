@@ -44,9 +44,11 @@ def send_email(
 
     return False
 
-def request_and_send():
-
-    response = requests.get(f'http://{SENDGRID_MOCK_HOST}:3000/api/mails')
+def request_and_send(timeout):
+    
+    date_time = datetime.datetime.now() - datetime.timedelta(seconds=timeout)
+    date_time = date_time.isoformat()
+    response = requests.get(f'http://{SENDGRID_MOCK_HOST}:3000/api/mails?dateTimeSince={date_time}')
     response = response.json()
     for email in response:
 
@@ -76,8 +78,8 @@ def request_and_send():
 def main():
 
     while True:
-        timeout = 3
-        request_and_send()
+        timeout = 5
+        request_and_send(timeout)
         time.sleep(timeout)
 
 
