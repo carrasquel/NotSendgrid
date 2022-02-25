@@ -13,3 +13,15 @@ Notsendgrid also supports SSL using [Let's Encrypt](https://letsencrypt.org/). T
 ```shell
 docker run -it -p 3000:3000 -e "API_KEY=sendgrid-api-key" -e "SMTP_HOST=localhost" -e "SMTP_PORT=1025" -e "CERT_DOMAINNAMES=[your-domain-name]" -e "CERT_EMAIL=[your-email-address]" carrasquel/notsendgrid:1.0
 ```
+
+### Support development
+
+If you liked this, donate to the cause.
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/carrasquel)
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2022-present, Nelson Carrasquel
