@@ -10,28 +10,26 @@ def send_email(
     sender,
     receivers,
     subject,
-    content_type,
-    content_body
+    contents
 ):
 
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
     message["From"] = sender
     message["To"] = receivers
-
-
-    if content_type == "text/html":
+    for content_type, content_body in contents:
+        if content_type == "text/html":
         
-        part = MIMEText(content_body, "html")
+            part = MIMEText(content_body, "html")
 
-    else:
+        else:
 
-        part = MIMEText(content_body, "plain")
+            part = MIMEText(content_body, "plain")
     
-    message.attach(part)
+        message.attach(part)
 
     try:
-        smtp = smtplib.SMTP('localhost:1025')
+        smtp = smtplib.SMTP(host='localhost', port=1025)
         smtp.sendmail(sender, receivers, message.as_string())         
         print("Successfully sent email")
         smtp.quit()
@@ -43,8 +41,8 @@ def send_email(
 
 def request_and_send():
 
-    response = requests.get('https://localhost:3000/api/emails')
-
+    response = requests.get('http://localhost:3000/api/mails')
+    response = response.json()
     for email in response:
 
         sender = email["from"]["email"]
@@ -53,19 +51,21 @@ def request_and_send():
         personalizations = email["personalizations"]
 
         for personalization in personalizations:
-            receiever = personalization["to"]["email"]
-            receivers.append(receiever)
+            for receiver in personalization["to"]:
+                receivers.append(receiver["email"])
+        contents = []
+        for content in email["content"]:
+            content_type = content["type"]
+            content_body = content["value"]
+            contents.append((content_type, content_body,))
 
-        content_type = email["content"]["type"]
-        content_body = email["content"]["value"]
-
-        send_email(
-            sender,
-            receivers,
-            subject,
-            content_type,
-            content_body
-        )
+        for receiver in receivers:
+            send_email(
+                sender,
+                receiver,
+                subject,
+                contents
+            )
 
 
 def main():
