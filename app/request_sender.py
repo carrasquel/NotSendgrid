@@ -7,7 +7,8 @@ import time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-MAILHOG_HOST = os.getenv("MAILHOG_HOST")
+SMTP_HOST = os.getenv("SMTP_HOST")
+SMTP_PORT = os.getenv("SMTP_PORT")
 SENDGRID_MOCK_HOST = os.getenv("SENDGRID_MOCK_HOST")
 
 
@@ -34,7 +35,7 @@ def send_email(
         message.attach(part)
 
     try:
-        smtp = smtplib.SMTP(host=MAILHOG_HOST, port=1025)
+        smtp = smtplib.SMTP(host=SMTP_HOST, port=SMTP_PORT)
         smtp.sendmail(sender, receivers, message.as_string())         
         print("Successfully sent email")
         smtp.quit()
