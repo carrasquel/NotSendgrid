@@ -12,7 +12,8 @@ services:
   notsengrid:
     image: notsendgrid
     environment:
-      - MAILHOG_HOST=mailhog
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
       - API_KEY=unsecured_key
     ports:
       - "3000:3000"
