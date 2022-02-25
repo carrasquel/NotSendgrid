@@ -14,14 +14,5 @@ services:
     environment:
       - MAILHOG_HOST=mailhog
       - API_KEY=unsecured_key
-#      - SENDGRID_MOCK_HOST=sengrid-mock
     ports:
       - "3000:3000"
-
-#  sendgrid-mock:
-#    image: ghashange/sendgrid-mock:1.7.2
-#    container_name: sengrid-mock
-#    environment:
-#      - API_KEY=unsecured_key
-#    ports:
-#      - "3000:3000"
