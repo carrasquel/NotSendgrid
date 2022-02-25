@@ -1,3 +1,4 @@
+import datetime
 import requests
 import smtplib
 import time
@@ -71,5 +72,11 @@ def request_and_send():
 def main():
 
     while True:
-        request_and_send()
-        time.sleep(5)
+        timeout = 3
+        request_and_send(timeout)
+        time.sleep(timeout)
+
+
+if __name__ == "__main__":
+
+    main()
