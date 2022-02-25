@@ -1,21 +1,19 @@
-version: '1'
+version: '3'
 
 services:
 
-  maildev:
-    image: maildev/maildev
-    ports:
-      - "1080:80"
-
   mailhog:
     image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 
-  bridge:
-    build:
-      context: .
-    command: python /opt/notsengrid/app/request_sender.py
-
-  notgithub:
-    image: ghashange/sendgrid-mock:1.7.2
+  notsengrid:
+    image: notsendgrid
+    environment:
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
+      - API_KEY=unsecured_key
     ports:
       - "3000:3000"

@@ -1,9 +1,15 @@
+import os
+import datetime
 import requests
 import smtplib
 import time
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+
+SMTP_HOST = os.getenv("SMTP_HOST")
+SMTP_PORT = os.getenv("SMTP_PORT")
+SENDGRID_MOCK_HOST = os.getenv("SENDGRID_MOCK_HOST")
 
 
 def send_email(
@@ -29,7 +35,7 @@ def send_email(
         message.attach(part)
 
     try:
-        smtp = smtplib.SMTP(host='localhost', port=1025)
+        smtp = smtplib.SMTP(host=SMTP_HOST, port=SMTP_PORT)
         smtp.sendmail(sender, receivers, message.as_string())         
         print("Successfully sent email")
         smtp.quit()
@@ -39,9 +45,11 @@ def send_email(
 
     return False
 
-def request_and_send():
-
-    response = requests.get('http://localhost:3000/api/mails')
+def request_and_send(timeout):
+    
+    date_time = datetime.datetime.now() - datetime.timedelta(seconds=timeout)
+    date_time = date_time.isoformat()
+    response = requests.get(f'http://{SENDGRID_MOCK_HOST}:3000/api/mails?dateTimeSince={date_time}')
     response = response.json()
     for email in response:
 
@@ -71,5 +79,11 @@ def request_and_send():
 def main():
 
     while True:
-        request_and_send()
-        time.sleep(5)
+        timeout = 5
+        request_and_send(timeout)
+        time.sleep(timeout)
+
+
+if __name__ == "__main__":
+
+    main()
