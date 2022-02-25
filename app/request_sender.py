@@ -1,3 +1,4 @@
+import os
 import datetime
 import requests
 import smtplib
@@ -5,6 +6,9 @@ import time
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+
+MAILHOG_HOST = os.getenv("MAILHOG_HOST")
+SENDGRID_MOCK_HOST = os.getenv("SENDGRID_MOCK_HOST")
 
 
 def send_email(
@@ -30,7 +34,7 @@ def send_email(
         message.attach(part)
 
     try:
-        smtp = smtplib.SMTP(host='localhost', port=1025)
+        smtp = smtplib.SMTP(host=MAILHOG_HOST, port=1025)
         smtp.sendmail(sender, receivers, message.as_string())         
         print("Successfully sent email")
         smtp.quit()
@@ -42,7 +46,7 @@ def send_email(
 
 def request_and_send():
 
-    response = requests.get('http://localhost:3000/api/mails')
+    response = requests.get(f'http://{SENDGRID_MOCK_HOST}:3000/api/mails')
     response = response.json()
     for email in response:
 
@@ -73,7 +77,7 @@ def main():
 
     while True:
         timeout = 3
-        request_and_send(timeout)
+        request_and_send()
         time.sleep(timeout)
 
 
