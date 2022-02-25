@@ -1,0 +1,21 @@
+version: '1'
+
+services:
+
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1080:80"
+
+  mailhog:
+    image: mailhog/mailhog
+
+  bridge:
+    build:
+      context: .
+    command: python /opt/notsengrid/app/request_sender.py
+
+  notgithub:
+    image: ghashange/sendgrid-mock:1.7.2
+    ports:
+      - "3000:3000"
