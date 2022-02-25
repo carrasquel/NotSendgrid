@@ -1,4 +1,3 @@
-import json
 import requests
 import smtplib
 import time
@@ -45,8 +44,6 @@ def request_and_send():
     response = requests.get('http://localhost:3000/api/mails')
     response = response.json()
     for email in response:
-
-        print(email)
 
         sender = email["from"]["email"]
         subject = email["subject"]
