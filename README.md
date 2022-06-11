@@ -20,6 +20,14 @@ In the examples folder you will find examples on how to use this docker service 
 
 You can also use any http client sending the proper body and parameters to the API on port `3000`.
 
+## Reading the e-mails
+
+All emails sent to this mock api will be resend to a **Mailhog** running service inside the same container, in the following url.
+
+```
+http://localhost:8025/
+```
+
 ### Support development
 
 If you liked this, donate to the cause.
