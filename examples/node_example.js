@@ -1,10 +1,10 @@
 const sendGridMail = require('@sendgrid/mail');
-sendGridMail.setApiKey(process.env.SENDGRID_API_KEY);
+sendGridMail.setApiKey("SG.unsecured_key");
 
 function getMessage() {
   const body = 'This is a test email using SendGrid from Node.js';
   return {
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "http://localhost:3000",
     to: 'you@domain.com',
     from: 'verifiedemail@previousstep.com',
     subject: 'Test email with Node.js and SendGrid',
