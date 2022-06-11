@@ -14,6 +14,12 @@ Notsendgrid also supports SSL using [Let's Encrypt](https://letsencrypt.org/). T
 docker run -it -p 3000:3000 -p 8025:8025 -e "API_KEY=sendgrid-api-key" -e "CERT_DOMAINNAMES=[your-domain-name]" -e "CERT_EMAIL=[your-email-address]" carrasquel/notsendgrid:latest
 ```
 
+## Examples
+
+In the examples folder you will find examples on how to use this docker service for testing Sendgrid automation with both `python` and `node`. Yu can use any compatible Sendgrid library, but in order to send to this service, you will have to override the base url as you will find in the example.
+
+You can also use any http client sending the proper body and parameters to the API on port `3000`.
+
 ### Support development
 
 If you liked this, donate to the cause.
